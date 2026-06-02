@@ -2826,7 +2826,9 @@ def state_export(
     store = StateStore()
     bundle = store.export_bundle()
     out = Path(path).expanduser().resolve()
-    out.write_text(json.dumps(bundle, indent=2, ensure_ascii=True), encoding="utf-8")
+    tmp = out.with_suffix('.tmp')
+    tmp.write_text(json.dumps(bundle, indent=2, ensure_ascii=True), encoding="utf-8")
+    tmp.replace(out)
     console.print(f"[green]Exported state to {out}[/green]")
 
 
