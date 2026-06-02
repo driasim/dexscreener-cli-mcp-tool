@@ -254,7 +254,9 @@ class StateStore:
                 pass
 
     def _acquire_file_lock(self) -> None:
-        handle = self.lock_file.open("a+", encoding="utf-8")
+        # touch the file first so r+ mode doesn't fail on first call
+        self.lock_file.touch()
+        handle = self.lock_file.open("r+", encoding="utf-8")
         if os.name != "nt":
             try:
                 self.lock_file.chmod(0o600)
