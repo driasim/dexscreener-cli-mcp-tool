@@ -93,7 +93,10 @@ _FIRST_RUN_SKIP_COMMANDS = frozenset({"setup", "doctor", "quickstart", "update",
 
 
 @app.callback(invoke_without_command=True)
-def _app_callback(ctx: typer.Context) -> None:
+def _app_callback(ctx: typer.Context, version: bool = typer.Option(False, "--version", help="Show version and exit.")) -> None:
+    if version:
+        typer.echo("dexscreener-cli-mcp-tool 0.1.0")
+        raise typer.Exit()
     """Show a first-run hint if the user hasn't run ``ds setup`` yet."""
     if ctx.invoked_subcommand is None:
         # Bare ``ds`` with no command -> show help
