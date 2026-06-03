@@ -93,7 +93,7 @@ _FIRST_RUN_SKIP_COMMANDS = frozenset({"setup", "doctor", "quickstart", "update",
 
 
 @app.callback(invoke_without_command=True)
-def _app_callback(ctx: typer.Context) -> None:
+def _app_callback(ctx: typer.Context, state_export: str = typer.Option(None, "--export", help="Export state to specified path."), state_import: str = typer.Option(None, "--import", help="Import state from specified path.")) -> None:
     """Show a first-run hint if the user hasn't run ``ds setup`` yet."""
     if ctx.invoked_subcommand is None:
         # Bare ``ds`` with no command -> show help
